@@ -25,7 +25,7 @@ func main() {
 	app.TemplateCache = tc
 
 	// Set app.UseCache to be false, meaning no templateCache will be used
-	//If set to ture, templateCache will be created, newly added template won't be rendered
+	//If set to ture, templateCache will be created, newly added temp ate won't be rendered
 	// unless app server is compiled again
 	app.UseCache = false
 
