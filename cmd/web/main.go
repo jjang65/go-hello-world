@@ -2,18 +2,33 @@ package main
 
 import (
 	"fmt"
+	"github.com/alexedwards/scs/v2"
 	"github.com/jjang65/go-hello-word/pkg/config"
 	"github.com/jjang65/go-hello-word/pkg/handlers"
 	"github.com/jjang65/go-hello-word/pkg/render"
 	"log"
 	"net/http"
+	"time"
 )
 
 const portNumber = ":8081"
 
+var app config.AppConfig
+
+var session *scs.SessionManager
+
 // main is the main application function
 func main() {
-	var app config.AppConfig
+	// Change this to ture when in production
+	app.InProduction = false
+
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true // Session will persist even after closing a tab
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
+
+	app.Session = session
 
 	// Create templateCache initially to cache templates
 	tc, err := render.CreateTemplateCache()

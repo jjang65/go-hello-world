@@ -20,6 +20,8 @@ func routes(app *config.AppConfig) http.Handler {
 	// NoSurf middleware for CSRF protection
 	mux.Use(NoSurf)
 
+	mux.Use(SessionLoad)
+
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
 	return mux
